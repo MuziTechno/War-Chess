@@ -1,0 +1,277 @@
+:root {
+    /* Hlavní barevná paleta */
+    --bg-color: #181826;
+    --bg-light: #23233b;
+    --bg-lighter: #2a2a44;
+    --text-color: #e3e3e8;
+    --accent-color: #ffe066;
+    --accent-hover: #ffd700;
+    --success-color: #2ddf2d;
+    --danger-color: #b72e2e;
+    
+    /* Barvy figurek */
+    --white-piece: #2a3347;
+    --black-piece: #3d2633;
+    
+    /* Efekty a animace */
+    --glow-strength: 0 0 18px 3px;
+}
+
+body {
+    font-family: 'Orbitron', 'Bebas Neue', 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 1.2em;
+    font-size: 2.8em;
+    letter-spacing: 0.07em;
+    background: linear-gradient(90deg, var(--accent-color) 25%, var(--danger-color) 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(1px 2px 6px #222);
+}
+
+#game-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 36px;
+    margin: 2em auto 1em auto;
+    max-width: 1200px;
+}
+
+/* Šachovnice */
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    gap: 0;
+    background: #1a1a24;
+    border: 4px solid #b4defa;
+    border-radius: 12px;
+    box-shadow: 0 0 24px 4px var(--bg-lighter);
+}
+
+.square {
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+    background: var(--bg-light);
+    border: 1px solid #38385a;
+    position: relative;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+
+.square:nth-child(even) {
+    background: #22223b;
+}
+
+.square.bila { 
+    background: var(--white-piece); 
+}
+
+.square.cerna { 
+    background: var(--black-piece); 
+}
+
+.square.selected {
+    outline: 3px solid var(--accent-hover);
+    z-index: 2;
+}
+
+/* Speciální zvýraznění */
+.square.tank-armor {
+    border: 2px solid var(--accent-hover) !important;
+    box-shadow: 0 0 16px 4px #b4defa, 0 0 0 4px var(--accent-hover) inset;
+    animation: tank-blink 1s linear infinite alternate;
+}
+
+@keyframes tank-blink {
+    from { background-color: #3e3e51; }
+    to   { background-color: var(--accent-color); }
+}
+
+.square.king-aura {
+    box-shadow: var(--glow-strength) var(--success-color), 0 0 0 3px var(--success-color) inset;
+    border: 2px solid var(--success-color);
+}
+
+.square.revive-target {
+    animation: revive-blink 0.6s linear infinite alternate;
+    border: 2px solid var(--accent-color) !important;
+    box-shadow: 0 0 14px 5px var(--accent-color);
+}
+
+@keyframes revive-blink {
+    from { background-color: #faf4b7; }
+    to   { background-color: var(--accent-color); }
+}
+
+.square.revive-ready {
+    animation: revive-ready 0.7s linear infinite alternate;
+}
+
+@keyframes revive-ready {
+    0% { box-shadow: 0 0 0 0 var(--accent-color); }
+    100% { box-shadow: 0 0 10px 5px #ffe06690; }
+}
+
+/* Figurky a jejich atributy */
+.piece-symbol {
+    font-size: 2.1em;
+    display: block;
+    text-align: center;
+    margin-top: 4px;
+    filter: drop-shadow(1px 1px 2px #0004);
+}
+
+.piece-hp, .piece-dmg {
+    position: absolute;
+    font-size: 1em;
+    font-weight: bold;
+    bottom: 2px;
+    right: 4px;
+    color: var(--accent-color);
+    text-shadow: 0 0 2px #222, 0 0 8px #000;
+}
+
+.piece-hp {
+    left: 6px;
+    right: unset;
+    color: var(--success-color);
+}
+
+.piece-hp.bonus {
+    color: var(--success-color);
+    font-weight: bold;
+    text-shadow: 0 0 6px var(--success-color), 0 0 2px #fff;
+}
+
+/* Ovládací prvky */
+#controls {
+    margin-top: 1em;
+    min-width: 260px;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+}
+
+#message {
+    font-size: 1.1em;
+    padding: 0.5em 0.7em;
+    background: #19192e;
+    border-radius: 7px;
+    border: 1px solid #3c3c5a;
+    min-height: 2.2em;
+    box-shadow: 0 1px 8px #2020281a;
+}
+
+#special-actions {
+    margin-bottom: 1em;
+}
+
+#special-actions button {
+    background: linear-gradient(90deg, var(--accent-color) 40%, var(--danger-color) 100%);
+    color: #2a1c00;
+    border: none;
+    padding: 0.5em 1.2em;
+    font-weight: bold;
+    font-size: 1.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 3px 14px #ffd70044;
+    transition: all 0.2s;
+    margin-bottom: 0.5em;
+}
+
+#special-actions button:hover {
+    background: linear-gradient(90deg, var(--danger-color) 25%, var(--accent-color) 90%);
+    color: #191905;
+}
+
+#legend {
+    background: #222238;
+    padding: 1.1em 1.4em;
+    border-radius: 12px;
+    border: 1.5px solid #664211;
+    color: #ffefb2;
+    min-width: 260px;
+    max-width: 310px;
+    box-shadow: 0 2px 12px #00000030;
+}
+
+#legend h2 {
+    font-size: 1.3em;
+    color: var(--accent-color);
+    margin-top: 0;
+}
+
+#legend ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 1em 0;
+}
+
+#legend li {
+    margin-bottom: 0.55em;
+    font-size: 1.08em;
+    line-height: 1.4;
+}
+
+#legend .piece-symbol {
+    display: inline;
+    margin: 0 6px 0 0;
+    font-size: 1.13em;
+}
+
+#legend .note {
+    font-size: 0.98em;
+    color: #ffec91;
+    background: #1a1a1e;
+    border-left: 4px solid var(--accent-color);
+    padding: 0.6em 1em;
+    border-radius: 7px;
+    margin-top: 1em;
+}
+
+footer {
+    text-align: center;
+    color: #444;
+    margin-top: 3em;
+    font-size: 0.92em;
+    padding: 1em 0 0.7em 0;
+}
+
+#restart-btn {
+    margin-top: 1.2em;
+    background: var(--danger-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6em 1.3em;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 1px 8px #ffd70030;
+    transition: background 0.15s;
+}
+
+#restart-btn:hover {
+    background: #d90202;
+}
+
+/* Responzivní design */
+@media (max-width: 900px) {
+    #game-wrapper { flex-direction: column; align-items: center; }
+    #legend { margin-top: 2em; }
+    #chessboard { margin: 0 auto; }
+}

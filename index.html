@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>War Chess</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>⚔️ War Chess ⚔️</h1>
+    <div id="game-wrapper">
+        <div id="chessboard"></div>
+        <div id="controls">
+            <div id="special-actions"></div>
+            <div id="message"></div>
+            <button id="restart-btn">Restart hry</button>
+        </div>
+        <div id="legend">
+            <h2>Legenda</h2>
+            <ul id="legend-items">
+                <!-- Dynamicky generováno -->
+            </ul>
+            <div class="note">
+                <strong>AP fáze:</strong> Po pohybu může figurka útočit (nebo použít speciální schopnost).<br>
+                <strong>Pancíř Tanku:</strong> První útok v kole je ignorován.<br>
+                <strong>Aura Krále:</strong> +2 dočasné HP při ohrožení.<br>
+                <strong>Revival:</strong> Královna může jednou za hru oživit pěšce.
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Warhammer šachy &copy; 2025 • Powered by GitHub Copilot</p>
+    </footer>
+
+    <!-- Moduly aplikace -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
